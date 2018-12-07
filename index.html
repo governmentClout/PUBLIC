@@ -29,10 +29,12 @@
 			<p class="description_text">
 				Government Clout is a platform for nigerians to give their takes and opinions on their government and how they are governed. It is open for all types of users. GClout gives your direct access to the government officials that you have elected
 			</p>
-			<div class="waitlist_container">
+
+			<div class="waitlist_container " >
+				<div class="wit_message description_text" id="wit_message"></div>
 				<div class="d_flex">
 					<input class="waitlist_input" name="email" id="email" type="email" placeholder="Enter your email address" required>
-					<button type="button" name="submit" class="waitlist_submit">></button>
+					<button type="button" name="submit" id="waitlist" class="waitlist_submit">></button>
 				</div>
 			</div>
 			<div class="d_flex justify_space_between">
@@ -62,5 +64,52 @@
 	</div>
 	<h1 class="gclout_soon">COMING SOON</h1>
 </body>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+	$('#waitlist').click(()=>{
+		console.log('here');
+
+		$('#waitlist').html("-");
+		$('#waitlist').prop('disabled',true);
+		$('.waitlist_input').prop('readonly',true);
+		let email = $('#email').val();
+
+		if(email.length < 1 ){
+
+			$('#wit_message').html("Email field is required");
+			$('#waitlist').html(">");
+			$('#waitlist').prop('disabled',false);
+			$('.waitlist_input').prop('readonly',false);
+
+		}else{
+
+			let package = {"email_address": email, "status": "subscribed"};
+
+			$.post( "https://us2.api.mailchimp.com/3.0/lists/584c40a397/members", package)
+			  .done(( data )=> {
+			  	$('.waitlist_input').prop('readonly',false);
+			  	$('#waitlist').html(">");
+			  	$('#waitlist').prop('disabled',false);
+			   	$('#wit_message').html("Thank you! You are now on our wait list");
+			  })
+			  .fail((data)=>{
+			  	$('#waitlist').html(">");
+			  	$('.waitlist_input').prop('readonly',false);
+			  	$('#waitlist').prop('disabled',false);
+			   	$('#wit_message').html("something went wrong");
+			  })
+
+		}
+
+		
+
+	});
+	
+  
+ 
+</script>
 
 </html>
