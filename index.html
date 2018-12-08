@@ -4,12 +4,12 @@
 <head>
   <meta charset="utf-8">
   <link rel="shortcut icon" href="./assets/logo.svg">
-  <meta name="description" content="Government Clout is a platform for nigerians to give their takes and opinions on their government and how they are governed. It is open for all types of users. GClout gives your direct access to the government officials that you have elected">
+  <meta name="description" content="Governance Clout is a platform for nigerians to give their takes and opinions on their government and how they are governed. It is open for all types of users. GClout gives your direct access to the government officials that you have elected">
   <meta name="keywords" content="Government, Nigeria, Opinion, GClout">
   <meta name="author" content="staybusy.ng">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#00B0F0">
-  <meta name="og:title" property="og:title" content="Government Clout | Coming soon">
+  <meta name="og:title" property="og:title" content="Governance Clout | Coming soon">
   <meta name="og:description" property="og:title" content="Government Clout is a platform for nigerians to give their takes and opinions on their government and how they are governed. It is open for all types of users. GClout gives your direct access to the government officials that you have elected">
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"> -->
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -27,7 +27,7 @@
 				It’s about time we have some innovation in the political space
 			</h2>
 			<p class="description_text">
-				Government Clout is a platform for nigerians to give their takes and opinions on their government and how they are governed. It is open for all types of users. GClout gives your direct access to the government officials that you have elected
+				Governance Clout is a social networking site for everyone (starting from Nigerians) to socialize, contribute and give opinions on governance at all levels. It is open for all type of users. GClout gives you direct access to the government officials that you have elected.
 			</p>
 
 			<div class="waitlist_container " >
@@ -86,21 +86,54 @@
 
 		}else{
 
-			let package = {"email_address": email, "status": "subscribed"};
+			let package = {"email_address": email, "status": "subscribed","user":"xyluz:ef40ed67dfbdd52c90cc0e098d1206dc-us2"};
 
-			$.post( "https://us2.api.mailchimp.com/3.0/lists/584c40a397/members", package)
-			  .done(( data )=> {
-			  	$('.waitlist_input').prop('readonly',false);
-			  	$('#waitlist').html(">");
-			  	$('#waitlist').prop('disabled',false);
-			   	$('#wit_message').html("Thank you! You are now on our wait list");
-			  })
-			  .fail((data)=>{
-			  	$('#waitlist').html(">");
-			  	$('.waitlist_input').prop('readonly',false);
-			  	$('#waitlist').prop('disabled',false);
-			   	$('#wit_message').html("something went wrong");
-			  })
+			$.ajax({
+			    url: 'https://us2.api.mailchimp.com/3.0/lists/584c40a397/members',
+			    beforeSend: (xhr)=> {
+		             xhr.setRequestHeader("user", "xyluz:ef40ed67dfbdd52c90cc0e098d1206dc-us2")
+		        },
+			    type: 'post',
+			    data: package,
+			    user: 'xyluz:ef40ed67dfbdd52c90cc0e098d1206dc-us2',
+			    headers: {
+
+			        header: 'content-type: application/x-www-form-urlencoded',   
+			        user: 'xyluz:ef40ed67dfbdd52c90cc0e098d1206dc-us2'
+			        
+			    },
+			    dataType: 'json',
+			    success:  (data) => {
+
+			        $('.waitlist_input').prop('readonly',false);
+				  	$('#waitlist').html(">");
+				  	$('#waitlist').prop('disabled',false);
+				   	$('#wit_message').html("Thank you! You are now on our wait list");
+
+			    },
+			    error: (data) => {
+
+			    	$('#waitlist').html(">");
+				  	$('.waitlist_input').prop('readonly',false);
+				  	$('#waitlist').prop('disabled',false);
+				   	$('#wit_message').html("something went wrong");
+
+			    }
+			});
+
+			// $.post( "https://us2.api.mailchimp.com/3.0/lists/584c40a397/members", package)
+			//   .done(( data )=> {
+			//   	$('.waitlist_input').prop('readonly',false);
+			//   	$('#waitlist').html(">");
+			//   	$('#waitlist').prop('disabled',false);
+			//    	$('#wit_message').html("Thank you! You are now on our wait list");
+			//   })
+			//   .fail((data)=>{
+			//   	$('#waitlist').html(">");
+			//   	$('.waitlist_input').prop('readonly',false);
+			//   	$('#waitlist').prop('disabled',false);
+			//    	$('#wit_message').html("something went wrong");
+			//   })
 
 		}
 
